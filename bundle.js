@@ -108,12 +108,9 @@
 
 	  endGame(){
 	    $('.game').append('<p>Game over!</p>');
-	    $('.game').append("<div class='button-bottom'>New Game!</div>");
-	    $('.game').append("<div class='button'>New Game!</div>");
 	    this.updateEndSnake();
 	    this.snakeFall();
 
-	    $('.button').click(() => {this.startGame();});
 	    if (this.highScore < this.board.score) {
 	      this.highScore = this.board.score
 	      $('.highscore').text(`High Score: ${this.highScore}`);
@@ -165,12 +162,13 @@
 	    let view = this;
 
 	    if(snakeCords.length === 0){
+	      console.log('here');
+	      this.addRestartButton()
 	      return;
 	    } else{
 	      let last = snakeCords[snakeCords.length - 1];
 	      let dropInt = window.setInterval(() => {
 	        if(last[0] < this.DIM){
-	          // debugger
 	          last[0] += 1;
 	          view.render();
 	        } else{
@@ -178,8 +176,14 @@
 	          window.clearInterval(dropInt);
 	          view.snakeFall();
 	        }
-	      }, 75);
+	      }, 50);
 	    }
+	  }
+
+	  addRestartButton(){
+	    $('.game').append("<div class='button-bottom'>New Game!</div>");
+	    $('.game').append("<div class='button'>New Game!</div>");
+	    $('.button').click(() => {this.startGame();});
 	  }
 
 	  updateEndSnake(){
